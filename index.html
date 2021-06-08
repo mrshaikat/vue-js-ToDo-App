@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+	<meta charset="UTF-8">
+	<title>Development Area</title>
+	<!-- ALL CSS FILES  -->
+	<link rel="stylesheet" href="assets/css/bootstrap.min.css">
+	<link rel="stylesheet" href="assets/css/style.css">
+	<link rel="stylesheet" href="assets/css/responsive.css">
+</head>
+<body>
+	
+	
+ <section class="header bg-light py-5">
+	 <div class="container">
+		 <div class="row">
+			 <div class="col-md-12 px-5">
+				<div class="form-inline">
+					<input v-model="food_name" class="pt-1" type="text">
+					<button @click="addFood" class="btn btn-primary btn-sm">Add</button>
+				</div>
+				<!-- Alert Message -->
+				<p v-if="alert.danger" class="alert alert-danger mt-3">{{ alert.message }} <button class="close" data-dismiss="alert">&times;</button></p>
+
+				<p v-if="alert.success" class="alert alert-success mt-3">{{ alert.message }} <button class="close" data-dismiss="alert">&times;</button></p>
+
+				<p v-if="alert.warning" class="alert alert-warning mt-3">{{ alert.message }} <button class="close" data-dismiss="alert">&times;</button></p>
+
+
+				<hr>
+				<ul class=" list-group">
+					<li v-for="(food, i) in foods" class="list-group-item mb-2">{{ (i+1)+'. '+food }}<button @click="deleteFood(i)" class="close">&times;</button></li>
+				</ul>
+				
+				
+			 </div>
+		 </div>
+	 </div>
+ </section>
+
+
+
+
+
+
+
+	<!-- JS FILES  -->
+	<script src="assets/js/jquery-3.4.1.min.js"></script>
+	<script src="assets/js/popper.min.js"></script>
+	<script src="assets/js/bootstrap.min.js"></script>
+
+	<!-- Vue Js load -->
+	<script src="assets/js/vue.min.js"></script>
+	<script src="assets/js/vue-router.js"></script>
+
+	<script> 
+		let header = new Vue({
+			el: '.header',
+			data: {
+				foods: ['Alo', 'Potol', 'Law'],	
+				food_name: null,
+				alert:{
+					danger: false,
+					success: false,
+					warning: false,
+					message: '',
+				},
+			},
+			methods: {
+				addFood: function(){
+					if(this.food_name == null){
+						this.alert.message = 'Fild Must Not be Empty !';
+						this.alert.danger = true;
+					}else{
+						this.foods.push(this.food_name);
+						this.food_name = null;
+						
+						this.alert.message = 'Food Added Successfull !';
+						this.alert.success = true;
+						
+						
+					}
+				},
+
+				deleteFood: function(index){
+					this.foods.splice(index, 1);
+					this.alert.message = 'Food Delete Successfull !';
+					this.alert.success = true;
+				},
+			},
+		});
+
+		Vue.config.devtools = true
+	</script>
+
+</body>
+</html>
